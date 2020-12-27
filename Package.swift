@@ -32,5 +32,6 @@ let package = Package(
                 name: "opencv4",
                 pkgConfig: "opencv4"
         )
-    ]
+    ],
+    cxxLanguageStandard: CXXLanguageStandard.cxx11
 )
