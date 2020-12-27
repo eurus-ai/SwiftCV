@@ -37,19 +37,19 @@ void Window_Resize(const char* winname, int width, int height) {
     cv::resizeWindow(winname, width, height);
 }
 
-struct Rect Window_SelectROI(const char* winname, Mat img) {
+struct CvRect Window_SelectROI(const char* winname, Mat img) {
     cv::Rect bRect = cv::selectROI(winname, *img);
-    Rect r = {bRect.x, bRect.y, bRect.width, bRect.height};
+    CvRect r = {bRect.x, bRect.y, bRect.width, bRect.height};
     return r;
 }
 
 struct Rects Window_SelectROIs(const char* winname, Mat img) {
     std::vector<cv::Rect> rois;
     cv::selectROIs(winname, *img, rois);
-    Rect* rects = new Rect[rois.size()];
+    CvRect* rects = new CvRect[rois.size()];
 
     for (size_t i = 0; i < rois.size(); ++i) {
-        Rect r = {rois[i].x, rois[i].y, rois[i].width, rois[i].height};
+        CvRect r = {rois[i].x, rois[i].y, rois[i].width, rois[i].height};
         rects[i] = r;
     }
 

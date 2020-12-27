@@ -18,7 +18,7 @@ void Window_SetTitle(const char* winname, const char* title);
 int Window_WaitKey(int);
 void Window_Move(const char* winname, int x, int y);
 void Window_Resize(const char* winname, int width, int height);
-struct Rect Window_SelectROI(const char* winname, Mat img);
+struct CvRect Window_SelectROI(const char* winname, Mat img);
 struct Rects Window_SelectROIs(const char* winname, Mat img);
 
 // Trackbar

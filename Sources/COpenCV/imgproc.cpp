@@ -21,10 +21,10 @@ Contour ApproxPolyDP(Contour curve, double epsilon, bool closed) {
     cv::approxPolyDP(curvePts, approxCurvePts, epsilon, closed);
 
     int length = approxCurvePts.size();
-    Point* points = new Point[length];
+    CvPoint* points = new CvPoint[length];
 
     for (size_t i = 0; i < length; i++) {
-        points[i] = (Point){approxCurvePts[i].x, approxCurvePts[i].y};
+        points[i] = (CvPoint){approxCurvePts[i].x, approxCurvePts[i].y};
     }
 
     return (Contour){points, length};
@@ -138,7 +138,7 @@ void PyrUp(Mat src, Mat dst, Size size, int borderType) {
     cv::pyrUp(*src, *dst, cvSize, borderType);
 }
 
-struct Rect BoundingRect(Contour con) {
+struct CvRect BoundingRect(Contour con) {
     std::vector<cv::Point> pts;
 
     for (size_t i = 0; i < con.length; i++) {
@@ -146,7 +146,7 @@ struct Rect BoundingRect(Contour con) {
     }
 
     cv::Rect bRect = cv::boundingRect(pts);
-    Rect r = {bRect.x, bRect.y, bRect.width, bRect.height};
+    CvRect r = {bRect.x, bRect.y, bRect.width, bRect.height};
     return r;
 }
 
@@ -176,20 +176,20 @@ struct RotatedRect MinAreaRect(Points points){
 
     cv::RotatedRect cvrect = cv::minAreaRect(pts);
 
-    Point* rpts = new Point[4];
+    CvPoint* rpts = new CvPoint[4];
     cv::Point2f* pts4 = new cv::Point2f[4];
     cvrect.points(pts4);
 
     for (size_t j = 0; j < 4; j++) {
-        Point pt = {int(lroundf(pts4[j].x)), int(lroundf(pts4[j].y))};
+        CvPoint pt = {int(lroundf(pts4[j].x)), int(lroundf(pts4[j].y))};
         rpts[j] = pt;
     }
 
     delete[] pts4;
 
     cv::Rect bRect = cvrect.boundingRect();
-    Rect r = {bRect.x, bRect.y, bRect.width, bRect.height};
-    Point centrpt = {int(lroundf(cvrect.center.x)), int(lroundf(cvrect.center.y))};
+    CvRect r = {bRect.x, bRect.y, bRect.width, bRect.height};
+    CvPoint centrpt = {int(lroundf(cvrect.center.x)), int(lroundf(cvrect.center.y))};
     Size szsz = {int(lroundf(cvrect.size.width)), int(lroundf(cvrect.size.height))};
 
     RotatedRect retrect = {(Contour){rpts, 4}, r, centrpt, szsz, cvrect.angle};
@@ -216,10 +216,10 @@ struct Contours FindContours(Mat src, int mode, int method) {
     Contour* points = new Contour[contours.size()];
 
     for (size_t i = 0; i < contours.size(); i++) {
-        Point* pts = new Point[contours[i].size()];
+        CvPoint* pts = new CvPoint[contours[i].size()];
 
         for (size_t j = 0; j < contours[i].size(); j++) {
-            Point pt = {contours[i][j].x, contours[i][j].y};
+            CvPoint pt = {contours[i][j].x, contours[i][j].y};
             pts[j] = pt;
         }
 
@@ -319,7 +319,7 @@ void AdaptiveThreshold(Mat src, Mat dst, double maxValue, int adaptiveMethod, in
     cv::adaptiveThreshold(*src, *dst, maxValue, adaptiveMethod, thresholdType, blockSize, c);
 }
 
-void ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness) {
+void ArrowedLine(Mat img, CvPoint pt1, CvPoint pt2, Scalar color, int thickness) {
     cv::Point p1(pt1.x, pt1.y);
     cv::Point p2(pt2.x, pt2.y);
     cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
@@ -327,14 +327,14 @@ void ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness) {
     cv::arrowedLine(*img, p1, p2, c, thickness);
 }
 
-void Circle(Mat img, Point center, int radius, Scalar color, int thickness) {
+void Circle(Mat img, CvPoint center, int radius, Scalar color, int thickness) {
     cv::Point p1(center.x, center.y);
     cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
 
     cv::circle(*img, p1, radius, c, thickness);
 }
 
-void Ellipse(Mat img, Point center, Point axes, double angle, double
+void Ellipse(Mat img, CvPoint center, CvPoint axes, double angle, double
              startAngle, double endAngle, Scalar color, int thickness) {
     cv::Point p1(center.x, center.y);
     cv::Point p2(axes.x, axes.y);
@@ -343,7 +343,7 @@ void Ellipse(Mat img, Point center, Point axes, double angle, double
     cv::ellipse(*img, p1, p2, angle, startAngle, endAngle, c, thickness);
 }
 
-void Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness) {
+void Line(Mat img, CvPoint pt1, CvPoint pt2, Scalar color, int thickness) {
     cv::Point p1(pt1.x, pt1.y);
     cv::Point p2(pt2.x, pt2.y);
     cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
@@ -351,7 +351,7 @@ void Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness) {
     cv::line(*img, p1, p2, c, thickness);
 }
 
-void Rectangle(Mat img, Rect r, Scalar color, int thickness) {
+void Rectangle(Mat img, CvRect r, Scalar color, int thickness) {
     cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
     cv::rectangle(
         *img,
@@ -389,7 +389,7 @@ struct Size GetTextSize(const char* text, int fontFace, double fontScale, int th
     return size;
 }
 
-void PutText(Mat img, const char* text, Point org, int fontFace, double fontScale,
+void PutText(Mat img, const char* text, CvPoint org, int fontFace, double fontScale,
              Scalar color, int thickness) {
     cv::Point pt(org.x, org.y);
     cv::Scalar c = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
@@ -401,7 +401,7 @@ void Resize(Mat src, Mat dst, Size dsize, double fx, double fy, int interp) {
     cv::resize(*src, *dst, sz, fx, fy, interp);
 }
 
-Mat GetRotationMatrix2D(Point center, double angle, double scale) {
+Mat GetRotationMatrix2D(CvPoint center, double angle, double scale) {
     cv::Point pt(center.x, center.y);
     return new  cv::Mat(cv::getRotationMatrix2D(pt, angle, scale));
 }
@@ -480,17 +480,17 @@ void Remap(Mat src, Mat dst, Mat map1, Mat map2, int interpolation, int borderMo
         cv::remap(*src, *dst, *map1, *map2, interpolation, borderMode, c);
 }
 
-void Filter2D(Mat src, Mat dst, int ddepth, Mat kernel, Point anchor, double delta, int borderType) {
+void Filter2D(Mat src, Mat dst, int ddepth, Mat kernel, CvPoint anchor, double delta, int borderType) {
         cv::Point anchorPt(anchor.x, anchor.y);
         cv::filter2D(*src, *dst, ddepth, *kernel, anchorPt, delta, borderType);
 }
 
-void SepFilter2D(Mat src, Mat dst, int ddepth, Mat kernelX, Mat kernelY, Point anchor, double delta, int borderType) {
+void SepFilter2D(Mat src, Mat dst, int ddepth, Mat kernelX, Mat kernelY, CvPoint anchor, double delta, int borderType) {
 	cv::Point anchorPt(anchor.x, anchor.y);
 	cv::sepFilter2D(*src, *dst, ddepth, *kernelX, *kernelY, anchorPt, delta, borderType);
 }
 
-void LogPolar(Mat src, Mat dst, Point center, double m, int flags) {
+void LogPolar(Mat src, Mat dst, CvPoint center, double m, int flags) {
 	cv::Point2f centerPt(center.x, center.y);
 	cv::logPolar(*src, *dst, centerPt, m, flags);
 }

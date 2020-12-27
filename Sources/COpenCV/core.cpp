@@ -71,7 +71,7 @@ struct ByteArray Mat_DataPtr(Mat m) {
 }
 
 // Mat_Region returns a Mat of a region of another Mat
-Mat Mat_Region(Mat m, Rect r) {
+Mat Mat_Region(Mat m, CvRect r) {
     return new cv::Mat(*m, cv::Rect(r.x, r.y, r.width, r.height));
 }
 
@@ -519,7 +519,7 @@ void Mat_MinMaxIdx(Mat m, double* minVal, double* maxVal, int* minIdx, int* maxI
     cv::minMaxIdx(*m, minVal, maxVal, minIdx, maxIdx);
 }
 
-void Mat_MinMaxLoc(Mat m, double* minVal, double* maxVal, Point* minLoc, Point* maxLoc) {
+void Mat_MinMaxLoc(Mat m, double* minVal, double* maxVal, CvPoint* minLoc, CvPoint* maxLoc) {
     cv::Point cMinLoc;
     cv::Point cMaxLoc;
     cv::minMaxLoc(*m, minVal, maxVal, &cMinLoc, &cMaxLoc);
@@ -672,7 +672,7 @@ void Points_Close(Points ps) {
     delete[] ps.points;
 }
 
-void Point_Close(Point p) {}
+void Point_Close(CvPoint p) {}
 
 void Rects_Close(struct Rects rs) {
     delete[] rs.rects;

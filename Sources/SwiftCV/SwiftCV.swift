@@ -2,7 +2,7 @@ import Foundation
 import COpenCV
 
 public struct Size {
-    // TODO add Point struct
+    // TODO add CvPoint struct
     internal var width: Int
     internal var height: Int
 
@@ -147,7 +147,7 @@ public func GaussianBlur(_ src: Mat, _ dst: Mat? = nil, _ ksize: Size = Size(0, 
 }
 
 public func getRotationMatrix2D(_ center: Size, _ angle: Double = 0.0, _ scale: Double = 1.0) -> Mat {
-    let sz = COpenCV.Point(x: Int32(center.width), y: Int32(center.height))
+    let sz = COpenCV.CvPoint(x: Int32(center.width), y: Int32(center.height))
     return Mat(COpenCV.GetRotationMatrix2D(sz, angle, scale))
 }
 

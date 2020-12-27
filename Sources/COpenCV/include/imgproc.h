@@ -33,7 +33,7 @@ void MatchTemplate(Mat image, Mat templ, Mat result, int method, Mat mask);
 struct Moment Moments(Mat src, bool binaryImage);
 void PyrDown(Mat src, Mat dst, Size dstsize, int borderType);
 void PyrUp(Mat src, Mat dst, Size dstsize, int borderType);
-struct Rect BoundingRect(Contour con);
+struct CvRect BoundingRect(Contour con);
 void BoxPoints(RotatedRect rect, Mat boxPts);
 double ContourArea(Contour con);
 struct RotatedRect MinAreaRect(Points points);
@@ -66,18 +66,18 @@ void Threshold(Mat src, Mat dst, double thresh, double maxvalue, int typ);
 void AdaptiveThreshold(Mat src, Mat dst, double maxValue, int adaptiveTyp, int typ, int blockSize,
                        double c);
 
-void ArrowedLine(Mat img, Point pt1, Point pt2, Scalar color, int thickness);
-void Circle(Mat img, Point center, int radius, Scalar color, int thickness);
-void Ellipse(Mat img, Point center, Point axes, double angle, double
+void ArrowedLine(Mat img, CvPoint pt1, CvPoint pt2, Scalar color, int thickness);
+void Circle(Mat img, CvPoint center, int radius, Scalar color, int thickness);
+void Ellipse(Mat img, CvPoint center, CvPoint axes, double angle, double
              startAngle, double endAngle, Scalar color, int thickness);
-void Line(Mat img, Point pt1, Point pt2, Scalar color, int thickness);
-void Rectangle(Mat img, Rect rect, Scalar color, int thickness);
+void Line(Mat img, CvPoint pt1, CvPoint pt2, Scalar color, int thickness);
+void Rectangle(Mat img, CvRect rect, Scalar color, int thickness);
 void FillPoly(Mat img, Contours points, Scalar color);
 struct Size GetTextSize(const char* text, int fontFace, double fontScale, int thickness);
-void PutText(Mat img, const char* text, Point org, int fontFace, double fontScale,
+void PutText(Mat img, const char* text, CvPoint org, int fontFace, double fontScale,
              Scalar color, int thickness);
 void Resize(Mat src, Mat dst, Size sz, double fx, double fy, int interp);
-Mat GetRotationMatrix2D(Point center, double angle, double scale);
+Mat GetRotationMatrix2D(CvPoint center, double angle, double scale);
 void WarpAffine(Mat src, Mat dst, Mat rot_mat, Size dsize);
 void WarpAffineWithParams(Mat src, Mat dst, Mat rot_mat, Size dsize, int flags, int borderMode,
                           Scalar borderValue);
@@ -89,9 +89,9 @@ void DrawContours(Mat src, Contours contours, int contourIdx, Scalar color, int 
 void Sobel(Mat src, Mat dst, int ddepth, int dx, int dy, int ksize, double scale, double delta, int borderType);
 void SpatialGradient(Mat src, Mat dx, Mat dy, int ksize, int borderType);
 void Remap(Mat src, Mat dst, Mat map1, Mat map2, int interpolation, int borderMode, Scalar borderValue);
-void Filter2D(Mat src, Mat dst, int ddepth, Mat kernel, Point anchor, double delta, int borderType);
-void SepFilter2D(Mat src, Mat dst, int ddepth, Mat kernelX, Mat kernelY, Point anchor, double delta, int borderType);
-void LogPolar(Mat src, Mat dst, Point center, double m, int flags);
+void Filter2D(Mat src, Mat dst, int ddepth, Mat kernel, CvPoint anchor, double delta, int borderType);
+void SepFilter2D(Mat src, Mat dst, int ddepth, Mat kernelX, Mat kernelY, CvPoint anchor, double delta, int borderType);
+void LogPolar(Mat src, Mat dst, CvPoint center, double m, int flags);
 void FitLine(Contour points, Mat line, int distType, double param, double reps, double aeps);
 CLAHE CLAHE_Create();
 CLAHE CLAHE_CreateWithParams(double clipLimit, Size tileGridSize);

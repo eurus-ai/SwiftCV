@@ -45,37 +45,37 @@ typedef struct Point2f {
 } Point2f;
 
 // Wrapper for an individual cv::cvPoint
-typedef struct Point {
+typedef struct CvPoint {
     int x;
     int y;
-} Point;
+} CvPoint;
 
-// Wrapper for the vector of Point structs aka std::vector<Point>
+// Wrapper for the vector of CvPoint structs aka std::vector<CvPoint>
 typedef struct Points {
-    Point* points;
+    CvPoint* points;
     int length;
 } Points;
 
 // Contour is alias for Points
 typedef Points Contour;
 
-// Wrapper for the vector of Points vectors aka std::vector< std::vector<Point> >
+// Wrapper for the vector of Points vectors aka std::vector< std::vector<CvPoint> >
 typedef struct Contours {
     Contour* contours;
     int length;
 } Contours;
 
 // Wrapper for an individual cv::cvRect
-typedef struct Rect {
+typedef struct CvRect {
     int x;
     int y;
     int width;
     int height;
-} Rect;
+} CvRect;
 
-// Wrapper for the vector of Rect struct aka std::vector<Rect>
+// Wrapper for the vector of CvRect struct aka std::vector<CvRect>
 typedef struct Rects {
-    Rect* rects;
+    CvRect* rects;
     int length;
 } Rects;
 
@@ -88,8 +88,8 @@ typedef struct Size {
 // Wrapper for an individual cv::RotatedRect
 typedef struct RotatedRect {
     Contour pts;
-    Rect boundingRect;
-    Point center;
+    CvRect boundingRect;
+    CvPoint center;
     Size size;
     double angle;
 } RotatedRect;
@@ -193,7 +193,7 @@ void Contours_Close(struct Contours cs);
 void KeyPoints_Close(struct KeyPoints ks);
 void Rects_Close(struct Rects rs);
 void Mats_Close(struct Mats mats);
-void Point_Close(struct Point p);
+void Point_Close(struct CvPoint p);
 void Points_Close(struct Points ps);
 void DMatches_Close(struct DMatches ds);
 void MultiDMatches_Close(struct MultiDMatches mds);
@@ -214,7 +214,7 @@ void Mat_CopyToWithMask(Mat m, Mat dst, Mat mask);
 void Mat_ConvertTo(Mat m, Mat dst, int type);
 struct ByteArray Mat_ToBytes(Mat m);
 struct ByteArray Mat_DataPtr(Mat m);
-Mat Mat_Region(Mat m, Rect r);
+Mat Mat_Region(Mat m, CvRect r);
 Mat Mat_Reshape(Mat m, int cn, int rows);
 void Mat_PatchNaNs(Mat m);
 Mat Mat_ConvertFp16(Mat m);
@@ -315,7 +315,7 @@ void Mat_MeanStdDev(Mat src, Mat dstMean, Mat dstStdDev);
 void Mat_Merge(struct Mats mats, Mat dst);
 void Mat_Min(Mat src1, Mat src2, Mat dst);
 void Mat_MinMaxIdx(Mat m, double* minVal, double* maxVal, int* minIdx, int* maxIdx);
-void Mat_MinMaxLoc(Mat m, double* minVal, double* maxVal, Point* minLoc, Point* maxLoc);
+void Mat_MinMaxLoc(Mat m, double* minVal, double* maxVal, CvPoint* minLoc, CvPoint* maxLoc);
 void Mat_MulSpectrums(Mat a, Mat b, Mat c, int flags);
 void Mat_Multiply(Mat src1, Mat src2, Mat dst);
 void Mat_Subtract(Mat src1, Mat src2, Mat dst);
